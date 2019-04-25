@@ -2,6 +2,16 @@
 #include <vector>
 #include "Geometry.h"
 
+struct Node
+{
+	Vector2f _sPoint;
+	Vector2f _ePoint;
+	Vector2f _debugPoint;
+
+	float cos = 0;
+	float sin = 0;
+};
+
 class Input;
 
 class Octopus
@@ -15,8 +25,12 @@ public:
 	
 private:
 	void CalTrigonometric(const Vector2f& pos);			/// éOäpî‰ÇÃåvéZ
-	void CircleMove();
 	void Move();
+
+	void DebugDraw();
+
+	std::vector<Node> nodes;
+
 	Vector2f _sPoint;
 	Vector2f _ePoint;
 	Vector2f debugPoint;	//Å@å„Ç≈è¡Ç∑
@@ -28,6 +42,5 @@ private:
 
 	float cos = 0;
 	float sin = 0;
-	float tan = 0;
 };
 

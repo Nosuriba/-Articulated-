@@ -18,7 +18,7 @@ void Game::Init()
 {
 	DxLib::SetGraphMode(screenSize.x, screenSize.y, 32);
 	DxLib::ChangeWindowMode(true);
-	DxLib::SetWindowText("テスト（´・ω・｀）");
+	DxLib::SetWindowText("サルの数学(｀・ω・´)");
 	if (DxLib_Init() == -1)
 	{
 		return;
