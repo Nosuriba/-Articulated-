@@ -5,7 +5,9 @@
 struct Node
 {
 	Vector2f _sPoint;
-	Vector2f _ePoint;			
+	Vector2f _midPoint;
+	Vector2f _ePoint;	
+
 	Vector2f _movePoint;
 
 	float cos = 0;
@@ -30,13 +32,13 @@ private:
 	void DebugDraw();
 
 	std::vector<Node> nodes;
+	Node node;
 
 	Vector2f _pos;		// Ç∆ÇËÇ†Ç¶Ç∏ÅAÃﬂ⁄≤‘∞ópÇÃç¿ïW
 	Vector2f _vel;
 
-	int waitCnt;
+	Vector2f debugLine = Vector2f();
 
-	float cos = 0;
-	float sin = 0;
+	int waitCnt;
 };
 
