@@ -53,28 +53,43 @@ void Octopus::CalTrigonometric(const Vector2f & pos)
 
 	node.cos = (pow(length, 2.0) + pow(pLength.Magnitude(), 2.0) - pow(length, 2.0)) / (2 * length * pLength.Magnitude());
 	auto rad = acos(node.cos);			/// cosの角度
-	node.sin = sin(rad);
+	node.sin = sin(rad);				/// sinの値
 	
-	if (std::isnan(node.cos)) { node.cos = 0.f; }
-	if (std::isnan(node.sin)) { node.sin = 0.f; }
-
-	if (pLength.Magnitude() < length * 2)
+	/// 値が異常値になった時の初期化
+	if (!(std::isnan(node.cos) && std::isnan(node.sin)))
 	{
-		auto cosD = pLength.Normalized() * (length * node.cos);
-		auto cross = Cross(Vector3f(pLength.x, pLength.y, 0), Vector3f(0, 0, 1));
-		auto cross2f = Vector2f(cross.x, cross.y);
-		cross2f.Normalize();
-		auto sinD = cross2f * (length * node.sin);
+		if (pLength.Magnitude() < length * 2)
+		{
+			/// 長さが一定距離より短くなった時の処理
 
-		node._midPoint = node._sPoint + cosD + sinD;
-		node._ePoint   = pos;
+			/// 外積を使って、Y方向の成分を出している
+			auto cross = Cross(Vector3f(pLength.x, pLength.y, 0), Vector3f(0, 0, 1));
+			auto cross2f = Vector2f(cross.x, cross.y);
+			cross2f.Normalize();
+
+			auto cosD = pLength.Normalized() * (length * node.cos);		/// X方向の成分
+			auto sinD = cross2f * (length * node.sin);					/// Y方向の成分
+
+			node._midPoint = node._sPoint + cosD + sinD;
+			node._ePoint = pos;
+		}
+		else
+		{
+			/// 長さが一定距離よりながくなった場合
+			node._midPoint = node._sPoint + (pLength.Normalized() * length);
+			node._ePoint = node._midPoint + (pLength.Normalized() * length);
+		}
 	}
+	
 	else
 	{
-		node._midPoint = node._sPoint + (pLength.Normalized() * length);
-		node._ePoint = node._midPoint + (pLength.Normalized() * length);
-		
+		node.cos = 0.f;
+		node.sin = 0.f;
 	}
+
+	/*if (std::isnan(node.cos)) { node.cos = 0.f; }
+	if (std::isnan(node.sin)) { node.sin = 0.f; }*/
+
 	
 }	
 
