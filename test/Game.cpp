@@ -38,7 +38,7 @@ void Game::Run()
 
 		input.Update();
 		player->Update(input);
-		//player->Draw();
+		player->Draw();
 		octopus->Update(player->GetPos());
 		octopus->Draw();
 

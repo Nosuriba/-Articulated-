@@ -55,7 +55,7 @@ struct Vector2D
 	Vector2D<T> Normalized()
 	{
 		float mag = Magnitude();
-		return (x / mag, y / mag);
+		return Vector2D<T>(x / mag, y / mag);
 	}
 };
 
