@@ -58,7 +58,7 @@ void Octopus::CalTrigonometric(const Vector2f & pos)
 		{
 			/// 長さが一定距離よりながくなった場合
 			node._midPoint = node._sPoint + (pLength.Normalized() * length);
-			node._ePoint = node._midPoint + (pLength.Normalized() * length);
+			node._ePoint   = node._midPoint + (pLength.Normalized() * length);
 		}
 	}
 	
@@ -189,7 +189,7 @@ void Octopus::Draw()
 void Octopus::DebugDraw()
 {
 	/// 余弦定理を使っての関節移動
-	/*DrawLine(node._midPoint.x, node._midPoint.y, node._ePoint.x, node._ePoint.y, 0x00ccff);				/// 終点から中間点
+	/*DrawLine(node._midPoint.x, node._midPoint.y, node._ePoint.x, node._ePoint.y, 0x00ccff);		/// 終点から中間点
 	DrawLine(node._sPoint.x, node._sPoint.y, node._midPoint.x, node._midPoint.y, 0x00ff00);			/// 中間点から始点
 
 	DrawCircle(node._sPoint.x, node._sPoint.y, 5, 0xff0000, true);
