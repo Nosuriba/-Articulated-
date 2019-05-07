@@ -13,18 +13,6 @@ Octopus::Octopus()
 	node._midPoint = Vector2f(300 + distance, 350);
 	node._ePoint   = Vector2f(300 + (distance * 2), 400);
 	waitCnt = debugCnt;
-
-	//nodes.resize(1);
-
-	//for (int i = 0; i < nodes.size(); i++)
-	//{
-	//	nodes[i]._sPoint = Vector2f(300 + (length * i), 400);
-	//	nodes[i]._midPoint = Vector2f(300 + length, 350);
-	//	nodes[i]._ePoint = Vector2f(300 + (length * (i + 1)), 400);
-	//	nodes[i]._movePoint = Vector2f();
-	//	nodes[i].cos = 0;
-	//	nodes[i].sin = 0;
-	//}
 }
 
 Octopus::~Octopus()
@@ -86,10 +74,6 @@ void Octopus::CalTrigonometric(const Vector2f & pos)
 		node.cos = 0.f;
 		node.sin = 0.f;
 	}
-
-	/*if (std::isnan(node.cos)) { node.cos = 0.f; }
-	if (std::isnan(node.sin)) { node.sin = 0.f; }*/
-
 	
 }	
 
@@ -100,7 +84,6 @@ void Octopus::Move()
 
 void Octopus::DebugDraw()
 {
-	//DrawLine(node._sPoint.x, node._sPoint.y, node._ePoint.x, node._ePoint.y, 0x00ccff);				/// 終点から始点
 	DrawLine(node._midPoint.x, node._midPoint.y, node._ePoint.x, node._ePoint.y, 0x00ccff);				/// 終点から中間点
 	DrawLine(node._sPoint.x, node._sPoint.y, node._midPoint.x, node._midPoint.y, 0x00ff00);			/// 中間点から始点
 
