@@ -8,8 +8,6 @@ struct Node
 	Vector2f _midPoint;
 	Vector2f _ePoint;	
 
-	Vector2f _movePoint;
-
 	float cos = 0;
 	float sin = 0;
 };
@@ -30,6 +28,7 @@ struct TestVec
 	void Dot(const Vector2f d)
 	{
 		dot = (_vec.x * d.x) + (_vec.y * d.y);
+		auto debug = 0;
 	}
 };
 
@@ -46,13 +45,8 @@ public:
 	
 private:
 	void CalTrigonometric(const Vector2f& pos);			/// éOäpî‰ÇÃåvéZ
-	void CalRadian(const Vector2f& pos);				/// íºê¸ÇÃäpìxåvéZ
-
-	void TestMove(std::vector<Test> tNode, float vRad, float lRad, float d, Vector2f pos);
 
 	void DebugDraw();
-
-	std::vector<Test> testNode;
 	Node node;
 
 	Vector2f _vel;
