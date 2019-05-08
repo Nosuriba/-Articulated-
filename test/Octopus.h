@@ -46,7 +46,7 @@ public:
 	
 private:
 	void CalTrigonometric(const Vector2f& pos);			/// 三角比の計算
-	void Move();
+	void CalRadian(const Vector2f& pos);				/// 直線の角度計算
 
 	void TestMove(std::vector<Test> tNode, float vRad, float lRad, float d, Vector2f pos);
 
@@ -55,10 +55,7 @@ private:
 	std::vector<Test> testNode;
 	Node node;
 
-	Vector2f _pos;		// とりあえず、ﾌﾟﾚｲﾔｰ用の座標
 	Vector2f _vel;
-
-	Vector2f debugLine = Vector2f();
 
 	int waitCnt;
 };

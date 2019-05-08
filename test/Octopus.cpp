@@ -43,7 +43,7 @@ void Octopus::CalTrigonometric(const Vector2f & pos)
 		{
 			/// 長さが一定距離より短くなった時の処理
 
-			/// 外積を使って、Y方向の成分を出している
+			/// 外積を使って、Y方向の単位ﾍﾞｸﾄﾙを求めている
 			auto cross = Cross(Vector3f(pLength.x, pLength.y, 0), Vector3f(0, 0, 1));
 			auto cross2f = Vector2f(cross.x, cross.y);
 			cross2f.Normalize();
@@ -68,11 +68,13 @@ void Octopus::CalTrigonometric(const Vector2f & pos)
 		node.sin = 0.f;
 	}
 	
-}	
-
-void Octopus::Move()
+}
+void Octopus::CalRadian(const Vector2f & pos)
 {
+	auto d = pos - testNode[0]._pos;
+	auto tan2 = atan2(d.y, d.x);
 
+	testNode[0]._rad = tan2 * 180.0 / DX_PI;
 }
 
 //// 関節の移動(IKのテスト用関数)
@@ -83,12 +85,12 @@ void Octopus::Move()
 /// @param pos 目標座標
 void Octopus::TestMove(std::vector<Test> tNode, float vRad, float lRad, float d, Vector2f pos)
 {
-	float cosT = cosf(vRad);
-	float sinT = sinf(vRad);
+	float cosT = cos(vRad);
+	float sinT = sin(vRad);
 
 	/// 回転角度の計算
 	Test nTip = testNode[testNode.size() - 1];		/// 先端の指定
-	for (int i = testNode.size() - 1; i > 0; --i)
+	for (int i = testNode.size() - 1; i >= 0; --i)
 	{
 		Test n = testNode[i];
 		
@@ -102,7 +104,7 @@ void Octopus::TestMove(std::vector<Test> tNode, float vRad, float lRad, float d,
 		jNode._vec.y = nTip._pos.y - n._pos.y;
 		jNode.Dot(Vector2f(dx, dy));
 
-		/// 右回りのﾍﾞｸﾄﾙの計算
+		/// 右回転ﾍﾞｸﾄﾙの計算
 		TestVec right;
 		if (n._rad + vRad <= lRad)
 		{
@@ -116,18 +118,18 @@ void Octopus::TestMove(std::vector<Test> tNode, float vRad, float lRad, float d,
 			right.dot = jNode.dot;
 		}
 
-		/// 左回りのﾍﾞｸﾄﾙの計算
+		/// 左回転のﾍﾞｸﾄﾙの計算
 		TestVec left;
 		if (n._rad - vRad >= -lRad)
 		{
-			left._vec.x = cosT * jNode._vec.x - sinT * jNode._vec.y;
-			left._vec.y = sinT * jNode._vec.y - cosT * jNode._vec.y;
+			left._vec.x = cosT * jNode._vec.x + sinT * jNode._vec.y;
+			left._vec.y = -sinT * jNode._vec.y + cosT * jNode._vec.y;
 			left.Dot(Vector2f(dx, dy));
 		}
 		else
 		{
 			/// 回転ができない時
-			right.dot = jNode.dot;
+			left.dot = jNode.dot;
 		}
 
 		/// 回転方向の選択
@@ -157,10 +159,10 @@ void Octopus::TestMove(std::vector<Test> tNode, float vRad, float lRad, float d,
 		Test n1 = testNode[i - 1];
 		Test n2 = testNode[i];
 		
-		float cosT = cosf(n1._rad);
-		float sinT = sinf(n1._rad);
+		float cosT = cos(n1._rad);
+		float sinT = sin(n1._rad);
 		float dx = cosT * px - sinT * py;
-		float dy = sinT * px - cosT * py;
+		float dy = sinT * px + cosT * py;
 
 		n2._pos.x = n1._pos.x + dx;
 		n2._pos.y = n1._pos.y + dy;
@@ -173,12 +175,10 @@ void Octopus::TestMove(std::vector<Test> tNode, float vRad, float lRad, float d,
 
 void Octopus::Update(const Vector2f& plPos)
 {
-	//waitCnt--;				/// 後で使うｶｳﾝﾄ
-	_pos = plPos;				/// ﾃﾞﾊﾞｯｸﾞ用	
-	CalTrigonometric(_pos);		/// 三角関数の値を求めている
-
-	testNode[0]._pos;
-	TestMove(testNode, 60, 90, distance, plPos);
+	//waitCnt--;					/// 後で使うｶｳﾝﾄ	
+	CalTrigonometric(plPos);		/// 三角関数の値を求めている
+	CalRadian(plPos);
+	TestMove(testNode, testNode[0]._rad, 180, distance, plPos);
 }
 
 void Octopus::Draw()

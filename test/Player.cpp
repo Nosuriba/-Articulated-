@@ -31,24 +31,21 @@ const Vector2f Player::GetPos()
 
 void Player::Move(const Input & p)
 {
+	_vel = Vector2f(0, 0);
 	if (p.IsPressing(PAD_INPUT_UP))
 	{
 		_vel.y = -5.0;
 	}
-	else if (p.IsPressing(PAD_INPUT_DOWN))
+	if (p.IsPressing(PAD_INPUT_DOWN))
 	{
 		_vel.y = 5.0;
 	}
-	else if (p.IsPressing(PAD_INPUT_LEFT))
+	if (p.IsPressing(PAD_INPUT_LEFT))
 	{
 		_vel.x = -5.0;
 	}
-	else if (p.IsPressing(PAD_INPUT_RIGHT))
+	if (p.IsPressing(PAD_INPUT_RIGHT))
 	{
 		_vel.x = 5.0;
-	}
-	else
-	{
-		_vel = Vector2f(0, 0);
 	}
 }
