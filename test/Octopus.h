@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <array>
 #include "Geometry.h"
 
 struct Node
@@ -12,24 +13,10 @@ struct Node
 	float sin = 0;
 };
 
-struct Test
+struct Point 
 {
-	Vector2f _pos = Vector2f();
-	float _rad = 0;
-
-	Test(const Vector2f& pos, const float& rad) : _pos(pos), _rad(rad) {};
-};
-
-struct TestVec
-{
-	Vector2f _vec;	// ÍŞ¸ÄÙ‚Ì¬•ª
-	float dot;		// “àÏ‚ÌŒ‹‰Ê
-
-	void Dot(const Vector2f d)
-	{
-		dot = (_vec.x * d.x) + (_vec.y * d.y);
-		auto debug = 0;
-	}
+	Vector2f _pos;
+	Vector2f _vel;
 };
 
 class Input;
@@ -45,9 +32,13 @@ public:
 	
 private:
 	void CalTrigonometric(const Vector2f& pos);			/// OŠp”ä‚ÌŒvZ
+	void CalPos(const Vector2f& pos);
 
 	void DebugDraw();
 	Node node;
+
+	std::array<Point, 3> point;
+	std::array<Vector2f, 3> strgPos;
 
 	Vector2f _vel;
 
