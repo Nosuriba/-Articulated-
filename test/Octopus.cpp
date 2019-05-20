@@ -61,13 +61,11 @@ void Octopus::CalTrigonometric(const Vector2f & pos)
 			node._ePoint   = node._midPoint + (pLength.Normalized() * length);
 		}
 	}
-	
 	else
 	{
 		node.cos = 0.f;
 		node.sin = 0.f;
 	}
-	
 }
 
 void Octopus::Update(const Vector2f& plPos)
@@ -79,15 +77,16 @@ void Octopus::Update(const Vector2f& plPos)
 
 void Octopus::Rotation()
 {
-	auto mat = MGetRotAxis(vec3, rad);
-	auto dVec1 = Vector2f(mat.m[0][0], mat.m[0][1]).V_Cast();
-	auto dVec2 = Vector2f(mat.m[1][0], mat.m[1][1]).V_Cast();
-	auto dVec3 = VGet(0,0,-1.0f);
-	mat = MGetAxis1(dVec1, dVec2, dVec3, Vector2f(LpGame.GetScreenSize().x / 2,LpGame.GetScreenSize().y / 2).V_Cast());
+	auto mat = MGetTranslate(Vector2f(-LpGame.GetScreenSize().x / 2,
+									  -LpGame.GetScreenSize().y / 2).V_Cast());
 
-	node._sPoint = VTransform(node._sPoint.V_Cast(), mat);
+	mat = MMult(mat, MGetRotAxis(vec3, rad));
+	mat = MMult(mat, MGetTranslate(Vector2f(LpGame.GetScreenSize().x / 2,
+											LpGame.GetScreenSize().y / 2).V_Cast()));
+
+	node._sPoint   = VTransform(node._sPoint.V_Cast(), mat);
 	node._midPoint = VTransform(node._midPoint.V_Cast(), mat);
-	node._ePoint = VTransform(node._ePoint.V_Cast(), mat);
+	node._ePoint   = VTransform(node._ePoint.V_Cast(), mat);
 }
 
 void Octopus::Draw()
