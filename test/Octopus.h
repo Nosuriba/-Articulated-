@@ -32,16 +32,11 @@ public:
 	
 private:
 	void CalTrigonometric(const Vector2f& pos);			/// ŽOŠp”ä‚ÌŒvŽZ
-	void CalPos(const Vector2f& pos);
 
 	void DebugDraw();
 	Node node;
 
-	std::array<Point, 3> point;
-	std::array<Vector2f, 3> strgPos;
-
 	Vector2f _vel;
 
-	int waitCnt;
 };
 
