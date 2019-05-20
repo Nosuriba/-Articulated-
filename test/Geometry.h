@@ -1,4 +1,5 @@
 #pragma once
+#include <DxLib.h>
 #include <math.h>
 
 // Œ^‚ª–¢Šm’è‚Å‚àŽg‚¦‚é‚à‚Ì
@@ -8,6 +9,13 @@ struct Vector2D
 	Vector2D() : x(0), y(0) {}
 	Vector2D(T inx, T iny) : x(inx), y(iny) {}
 	T x, y;
+
+	// VECTOR‚Ì’l‚ð‘ã“ü‚·‚é‚½‚ß‚Ì‚à‚Ì
+	void operator= (const VECTOR& in)
+	{
+		x = in.x;
+		y = in.y;
+	}
 
 	// ‰ÁŽZ(“ñŽŸŒ³)
 	void operator+= (const Vector2D<T> in)
@@ -57,6 +65,11 @@ struct Vector2D
 		float mag = Magnitude();
 		return Vector2D<T>(x / mag, y / mag);
 	}
+
+	VECTOR V_Cast()
+	{
+		return VGet(x, y, 0);
+	}
 };
 
 // Vector2 + Vector2
@@ -89,7 +102,7 @@ Vector2D<T> operator*(const Vector2D<T>& va, const float k)
 
 // Vector2 * float
 template<typename T>
-Vector2D<T> operator/(const Vector2D<T> va, const float k)
+Vector2D<T> operator/(const Vector2D<T>& va, const float k)
 {
 	return Vector2D<T>(va.x / k, va.y / k);
 }

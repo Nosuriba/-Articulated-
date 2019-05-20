@@ -2,9 +2,15 @@
 #include <cmath>
 #include "Octopus.h"
 #include "Input.h"
+#include "Game.h"
 
 const int distance = 60;
 const int length = 80;
+
+const VECTOR vec1 = { 1.f, 0.f, 0.f };
+const VECTOR vec2 = { 0.f, 0.f, 0.f };
+const VECTOR vec3 = { 0.f, 0.f, -1.0f };
+const float rad = DX_PI / 180.f;
 
 Octopus::Octopus()
 {
@@ -66,7 +72,22 @@ void Octopus::CalTrigonometric(const Vector2f & pos)
 
 void Octopus::Update(const Vector2f& plPos)
 {
+	_pos = plPos;
 	CalTrigonometric(plPos);		/// éOäpä÷êîÇÃílÇãÅÇﬂÇƒÇ¢ÇÈ
+	Rotation();
+}
+
+void Octopus::Rotation()
+{
+	auto mat = MGetRotAxis(vec3, rad);
+	auto dVec1 = Vector2f(mat.m[0][0], mat.m[0][1]).V_Cast();
+	auto dVec2 = Vector2f(mat.m[1][0], mat.m[1][1]).V_Cast();
+	auto dVec3 = VGet(0,0,-1.0f);
+	mat = MGetAxis1(dVec1, dVec2, dVec3, Vector2f(LpGame.GetScreenSize().x / 2,LpGame.GetScreenSize().y / 2).V_Cast());
+
+	node._sPoint = VTransform(node._sPoint.V_Cast(), mat);
+	node._midPoint = VTransform(node._midPoint.V_Cast(), mat);
+	node._ePoint = VTransform(node._ePoint.V_Cast(), mat);
 }
 
 void Octopus::Draw()

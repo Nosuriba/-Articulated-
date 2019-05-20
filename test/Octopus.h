@@ -29,6 +29,8 @@ public:
 
 	void Draw();
 	void Update(const Vector2f& plPos);
+
+	void Rotation();
 	
 private:
 	void CalTrigonometric(const Vector2f& pos);			/// ŽOŠp”ä‚ÌŒvŽZ
@@ -37,6 +39,6 @@ private:
 	Node node;
 
 	Vector2f _vel;
-
+	Vector2f _pos;
 };
 
